@@ -1,15 +1,23 @@
 import React, { Component } from 'react';
-import Headersection from './UI_Components/headersection/headersection'
-import Footersection from './UI_Components/Footersection/Footersection'
+import Footersection from './UI_Components/Footersection/Footersection';
+
+import { Route} from 'react-router-dom';
+import Login  from './components/Login/Login';
+import Layout from './UI_Components/Layout/Layout';
+import Registration from './components/Registration/Registration'
 
 
 class App extends Component {
   render() {
     return (
       <div>
-        <Headersection/>
-        <Footersection/>
+       <Layout/> 
+      <Route path="/" exact component={Login} />
+      <Route path="/Registration"  component={Registration} />
+       <Footersection/> 
       </div>
+      
+      
     );
   }
 }
