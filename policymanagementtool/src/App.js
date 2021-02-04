@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import Headersection from './UI_Components/headersection/headersection'
+
+
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        
+      <div>
+        <Headersection/>
+             
       </div>
     );
   }
