@@ -16,10 +16,10 @@
 
 
 .headersection img {
-  height: 90%;
-  text-align: left
-}
+  height: 80%;
+  
 
+}
 @media (max-width: 499px) {
   .DesktopOnly {
       display: none;

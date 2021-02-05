@@ -1,124 +1,125 @@
 import React,{Component} from 'react';
 import Input from '../Input/Input';
 import Button from '../Button/Button';
-import classes from  './Login';
+import classes from  './Login.css';
 
 
 
 
 class Login extends Component {
     state = {
-        orderForm: {
-            name: {
-                elementType: 'input',
-                elementConfig: {
-                    type: 'text',
-                    placeholder: 'Your Name'
-                },
-                value: ''
-            },
-            street: {
-                elementType: 'input',
-                elementConfig: {
-                    type: 'text',
-                    placeholder: 'Street'
-                },
-                value: ''
-            },
-            zipCode: {
-                elementType: 'input',
-                elementConfig: {
-                    type: 'text',
-                    placeholder: 'ZIP Code'
-                },
-                value: ''
-            },
-            country: {
-                elementType: 'input',
-                elementConfig: {
-                    type: 'text',
-                    placeholder: 'Country'
-                },
-                value: ''
-            },
+        controls: {
             email: {
                 elementType: 'input',
                 elementConfig: {
                     type: 'email',
-                    placeholder: 'Your E-Mail'
+                    placeholder: 'Mail Address'
                 },
-                value: ''
+                value: '',
+                validation: {
+                    required: true,
+                    isEmail: true
+                },
+                valid: false,
+                touched: false
             },
-            deliveryMethod: {
-                elementType: 'select',
+            password: {
+                elementType: 'input',
                 elementConfig: {
-                    options: [
-                        {value: 'fastest', displayValue: 'Fastest'},
-                        {value: 'cheapest', displayValue: 'Cheapest'}
-                    ]
+                    type: 'password',
+                    placeholder: 'Password'
                 },
-                value: ''
+                value: '',
+                validation: {
+                    required: true,
+                    minLength: 6
+                },
+                valid: false,
+                touched: false
             }
         },
-        loading: false
+        isSignup: true
+    }
+    checkValidity ( value, rules ) {
+        let isValid = true;
+        if ( !rules ) {
+            return true;
+        }
+
+        if ( rules.required ) {
+            isValid = value.trim() !== '' && isValid;
+        }
+
+        return isValid;
     }
 
-    orderHandler = ( event ) => {
+    inputChangedHandler = ( event, controlName ) => {
+        const updatedControls = {
+            ...this.state.controls,
+            [controlName]: {
+                ...this.state.controls[controlName],
+                value: event.target.value,
+                valid: this.checkValidity( event.target.value, this.state.controls[controlName].validation ),
+                touched: true
+            }
+        };
+        this.setState( { controls: updatedControls } );
+    }
+
+    submitHandler = ( event ) => {
         event.preventDefault();
-        this.setState( { loading: true } );
-        const formData = {};
-        for (let formElementIdentifier in this.state.orderForm) {
-            formData[formElementIdentifier] = this.state.orderForm[formElementIdentifier].value;
-        }
-        const order = {
-            ingredients: this.props.ingredients,
-            price: this.props.price,
-            orderData: formData
-        }
-    
+        this.props.history.push( '/Home' );
+        
     }
 
-    inputChangedHandler = (event, inputIdentifier) => {
-        const updatedOrderForm = {
-            ...this.state.orderForm
-        };
-        const updatedFormElement = { 
-            ...updatedOrderForm[inputIdentifier]
-        };
-        updatedFormElement.value = event.target.value;
-        updatedOrderForm[inputIdentifier] = updatedFormElement;
-        this.setState({orderForm: updatedOrderForm});
+    registerHandler = ( event ) => {
+        event.preventDefault();
+        this.props.history.push( '/Registration' );
+        
     }
+   
 
     render () {
         const formElementsArray = [];
-        for (let key in this.state.orderForm) {
-            formElementsArray.push({
+        for ( let key in this.state.controls ) {
+            formElementsArray.push( {
                 id: key,
-                config: this.state.orderForm[key]
-            });
+                config: this.state.controls[key]
+            } );
         }
-        let form = (
-            <form onSubmit={this.orderHandler}>
-                {formElementsArray.map(formElement => (
-                    <Input 
-                        key={formElement.id}
-                        elementType={formElement.config.elementType}
-                        elementConfig={formElement.config.elementConfig}
-                        value={formElement.config.value}
-                        changed={(event) => this.inputChangedHandler(event, formElement.id)} />
-                ))}
-                <Button btnType="Success">ORDER</Button>
-            </form>
-        );
-       
+
+        let form = formElementsArray.map( formElement => (
+            <Input
+                key={formElement.id}
+                elementType={formElement.config.elementType}
+                elementConfig={formElement.config.elementConfig}
+                value={formElement.config.value}
+                invalid={!formElement.config.valid}
+                shouldValidate={formElement.config.validation}
+                touched={formElement.config.touched}
+                changed={( event ) => this.inputChangedHandler( event, formElement.id )} />
+        ) );
+
+      
+
         return (
-            <div className={classes.ContactData}>
-                <h4>Enter your Contact Data</h4>
-                {form}
+            <div className={classes.Login}>
+               
+                <form onSubmit={this.submitHandler}>
+                    {form}
+                    <Button btnType="Success">LOGIN</Button>
+                   
+                </form>
+                <form onSubmit={this.registerHandler}>
+                    
+                    <Button btnType="Success">REGISTER</Button>
+                </form>
             </div>
         );
     }
 }
+
+
+
 
 export default Login;
