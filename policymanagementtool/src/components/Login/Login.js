@@ -9,11 +9,11 @@ import classes from  './Login.css';
 class Login extends Component {
     state = {
         controls: {
-            email: {
+            username: {
                 elementType: 'input',
                 elementConfig: {
                     type: 'email',
-                    placeholder: 'Mail Address'
+                    placeholder: 'User Name'
                 },
                 value: '',
                 validation: {

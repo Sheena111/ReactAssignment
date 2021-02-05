@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Route} from 'react-router-dom';
 import HomeLayout from '../../UI_Components/HomeLayout/HomeLayout';
+import Policy from '../../containers/Policy/Policy';
+
 
 
 class Home extends Component {
@@ -8,8 +9,8 @@ class Home extends Component {
     return (
       <div>
        <HomeLayout/> 
-   
-       
+        
+       <Policy/>
       </div>
       
       
