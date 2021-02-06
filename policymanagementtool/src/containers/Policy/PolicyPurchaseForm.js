@@ -37,7 +37,7 @@ const PolicyPurchaseForm = React.memo(props => {
                 console.log(event.target.value);
                 setEnteredPolicyType(event.target.value);
               }} >
-                 <option id=""  value=" "></option>
+                 <option id=""  value=" ">please select</option>
                   <option id="healthinsurance"  value=" healthinsurance">Health Insurance </option>
                   <option id="lifeinsurance"  value="lifeinsurance">Life   Insurance </option>
                   <option id="motorinsurance"  value="motorinsurance">Motor Insurance </option>
@@ -73,6 +73,7 @@ const PolicyPurchaseForm = React.memo(props => {
                 console.log(event.target.value);
                 setEnteredPolicyDuration(event.target.value);
               }} >
+                 <option id=" "  value=" "> please select </option>
                   <option id="5"  value=" 5">5 </option>
                   <option id="10"  value="10">10 </option>
                   <option id="15"  value="15">15</option>
