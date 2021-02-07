@@ -2,8 +2,8 @@ import React,{Component} from 'react';
 import Input from '../Input/Input';
 import Button from '../Button/Button';
 import classes from  './Login.css';
-
-
+import * as actionTypes from '../../store/action';
+import axios from 'axios';
 
 
 class Login extends Component {
@@ -12,7 +12,7 @@ class Login extends Component {
             username: {
                 elementType: 'input',
                 elementConfig: {
-                    type: 'email',
+                    type: 'text',
                     placeholder: 'User Name'
                 },
                 value: '',
@@ -68,7 +68,26 @@ class Login extends Component {
 
     submitHandler = ( event ) => {
         event.preventDefault();
-        this.props.history.push( '/Home' );
+        const formData = {};
+        for (let formElementIdentifier in this.state.controls) {
+            console.log(formElementIdentifier);
+            formData[formElementIdentifier] = this.state.controls[formElementIdentifier].value;
+        }
+        axios.get('http://localhost:3000/users')
+    .then(resp => {
+        let data = resp.data;
+        data.forEach(e => {
+            if((e.username===formData.username) &&(e.password===formData.password)){
+                console.log("Logged in successfully");
+                this.props.onLoginAction(e.username,e.id);
+                this.props.history.push( '/Home' );
+            }
+        });
+    })
+    .catch(error => {
+        console.log(error);
+    }); 
+       
         
     }
 
@@ -107,7 +126,7 @@ class Login extends Component {
                
                 <form onSubmit={this.submitHandler}>
                     {form}
-                    <Button btnType="Success">LOGIN</Button>
+                    <Button btnType="Success" >LOGIN</Button>
                    
                 </form>
                 <form onSubmit={this.registerHandler}>
@@ -120,6 +139,13 @@ class Login extends Component {
 }
 
 
+
+const mapDispatchToProps = dispatch =>{
+
+        return{
+            onLoginAction : (name,id) => dispatch({type:actionTypes.LOGIN_ACTION,userName:name,userId:id})
+        }
+};
 
 
 export default Login;
