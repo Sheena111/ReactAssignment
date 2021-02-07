@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import axios from 'axios';
 import Button from '../../components/Button/Button';
 import Spinner from '../../UI_Components/Spinner/Spinner';
 import classes from './Registration.css';
@@ -228,22 +228,27 @@ class Registration extends Component {
         this.setState( { loading: true } );
         const formData = {};
         for (let formElementIdentifier in this.state.userForm) {
+            console.log(formElementIdentifier);
             formData[formElementIdentifier] = this.state.userForm[formElementIdentifier].value;
         }
+        formData["id"] ='R-'+Math.floor(Math.random()*(999-100+1)+100);
+        console.log(" the generated user id"+ formData.id)
+
         const user = {
-            ingredients: this.props.ingredients,
-            price: this.props.price,
+           
             userData: formData
         }
-        this.props.history.push( '/' );
-        //axios.post( '/users.json', user )
-        //    .then( response => {
-          //      this.setState( { loading: false } );
-           //     this.props.history.push( '/' );
-          //  } )
-         //   .catch( error => {
-           //     this.setState( { loading: false } );
-          //  } );
+        alert(" Your user Id is  :"+formData.id);
+       
+       
+        axios.post( 'http://localhost:3000/users', formData )
+          .then( response => {
+              this.setState( { loading: false } );
+             this.props.history.push( '/' );
+           } )
+          .catch( error => {
+               this.setState( { loading: false } );
+          } );
     }
 
     checkValidity(value, rules) {
