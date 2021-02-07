@@ -4,7 +4,7 @@ import Button from '../Button/Button';
 import classes from  './Login.css';
 import * as actionTypes from '../../store/action';
 import axios from 'axios';
-
+import { connect } from 'react-redux';
 
 class Login extends Component {
     state = {
@@ -148,4 +148,4 @@ const mapDispatchToProps = dispatch =>{
 };
 
 
-export default Login;
+export default connect(null, mapDispatchToProps)(Login);
