@@ -6,6 +6,7 @@ import classes from './Registration.css';
 //import axios from '../../../axios-orders';
 import Input from '../../components/Input/Input';
 
+
 class Registration extends Component {
     
     state = {

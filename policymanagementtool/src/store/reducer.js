@@ -3,7 +3,7 @@ import * as actionTypes from './action';
 
 const initialState = {
    userName:null,
-    userId:null
+   formData:{}
 };
 
 const reducer =(state =initialState,action) => {
@@ -13,7 +13,13 @@ switch(action.type){
         return  {
             ...state,
             userName:action.userName,
-            userId:action.userId
+            formData:action.formData
+            
+        }
+        case(actionTypes.PROFILE_UPDATE_ACTION):
+        return  {
+            ...state,
+            formData:action.formData
             
         }
 }

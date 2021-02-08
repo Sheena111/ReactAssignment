@@ -78,8 +78,27 @@ class Login extends Component {
         let data = resp.data;
         data.forEach(e => {
             if((e.username===formData.username) &&(e.password===formData.password)){
+                const formData = {};
+                formData["name"] =e.name;
+                formData["address"] =e.address;
+                formData["street"] =e.street;
+                formData["zipCode"] =e.zipCode;
+                formData["country"] =e.country;
+                formData["email"] =e.email;
+                formData["married"] =e.married;
+                formData["phonenumber"] =e.phonenumber;
+                formData["registrationDate"] =e.registrationDate;
+                formData["idtype"] =e.idtype;
+                formData["idnumber"] =e.idnumber;
+                formData["id"] =e.id;
+                formData["username"] =e.username;
+                formData["password"] =e.password;
+            
+
                 console.log("Logged in successfully");
-                this.props.onLoginAction(e.username,e.id);
+                console.log(";;;;;;;user data" +formData);
+                console.log("......."+formData.address)
+                this.props.onLoginAction(e.username,formData);
                 this.props.history.push( '/Home' );
             }
         });
@@ -143,7 +162,7 @@ class Login extends Component {
 const mapDispatchToProps = dispatch =>{
 
         return{
-            onLoginAction : (name,id) => dispatch({type:actionTypes.LOGIN_ACTION,userName:name,userId:id})
+            onLoginAction : (name,formData) => dispatch({type:actionTypes.LOGIN_ACTION,userName:name,formData:formData})
         }
 };
 
